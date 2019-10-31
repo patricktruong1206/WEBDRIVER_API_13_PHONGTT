@@ -60,7 +60,7 @@ public class Topic_02_WebLocator {
 		driver.findElement(By.linkText("ORDERS AND RETURNS")).click();
 		
 		//Partial linktext
-		//driver.findElement(By.partialLinkText("Orders and")).click();
+		driver.findElement(By.partialLinkText("ORDERS")).click();
 		
 		//CSS
 		//find css by id syntax #id  
