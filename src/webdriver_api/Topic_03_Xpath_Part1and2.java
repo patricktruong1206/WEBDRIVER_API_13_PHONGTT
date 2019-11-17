@@ -45,6 +45,7 @@ public class Topic_03_Xpath_Part1and2 {
 		Assert.assertEquals(reqTextEmail,"This is a required field.");
 		
 		String reqTextPass = driver.findElement(By.xpath("//div[@id='advice-required-entry-pass']")).getText();
+		
 		Assert.assertEquals(reqTextPass,"This is a required field.");
 	}
 
