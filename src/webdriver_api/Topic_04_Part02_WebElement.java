@@ -48,7 +48,8 @@ public class Topic_04_Part02_WebElement {
 	@Test
 	public void TC_01_isDisplayed() throws Exception{
 		
-
+		//Step 1: Access page 
+		
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		
 	/*	if(driver.findElement(email).isDisplayed())
@@ -67,6 +68,7 @@ public class Topic_04_Part02_WebElement {
 		}
 		*/
 		
+		//Step 2&3: Check element is displayed and input data
 		if(isElementDisplayed(email))
 		{
 			sendkeyToElement(email,"Automation Testing");
@@ -91,10 +93,10 @@ public class Topic_04_Part02_WebElement {
 
 	@Test
 	public void TC_02_isEnabled() {
-		//step 1 truy cap trang
+		//step 1 Access page
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		
-		//step 2 kiem tra cac phan tu enabled
+		//step 2 check element is enabled
 
 		Assert.assertTrue(isElementEnabled(email));
 		
@@ -107,6 +109,8 @@ public class Topic_04_Part02_WebElement {
 		Assert.assertTrue(isElementEnabled(interest));
 		
 		Assert.assertTrue(isElementEnabled(slider01));
+		
+		//Step 3 check element is disabled
 		
 		Assert.assertFalse(isElementEnabled(passWord));
 		
@@ -123,17 +127,28 @@ public class Topic_04_Part02_WebElement {
 
 	@Test
 	public void TC_03_isSelected() {
+		
+		//Step 1 Access page
 		driver.get("https://automationfc.github.io/basic-form/index.html");
+		
+		//Step 2 select these fields
 		
 		clickElement(ageUnder18);
 		
 		clickElement(interest);
 		
+		
+		//Step 3 Check Element is selected 
+		
 		Assert.assertTrue(isElementSelected(ageUnder18));
 		
 		Assert.assertTrue(isElementSelected(interest));
 		
+		// Step 4 Un-select interest field
+		
 		clickElement(interest);
+		
+		//Step 5: Recheck Element is selected or not
 		
 		Assert.assertTrue(isElementSelected(ageUnder18));
 		
