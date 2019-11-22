@@ -1,18 +1,29 @@
 package webdriver_api;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Topic_05_Textbox_Textarea_Dropdownlist {
 	WebDriver driver;
+	WebDriverWait waitExplicit;
+	JavascriptExecutor jsExecutor;	
+	Actions action;
+	
 	String username, password,customerID, customerName, gender, dateOfBirth, address, city, state, pin, phone, email;
 	String editAddress, editCity, editState, editPin, editPhone, editEmail;
 
@@ -44,10 +55,17 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	
 	By submitButton= By.xpath("//input[@type='submit']");
 	
+	Select select;
+	
 	@BeforeClass
 	public void beforeClass() {
 		driver = new FirefoxDriver();
-
+		waitExplicit= new WebDriverWait(driver,30);
+		action = new Actions(driver);
+		
+		
+		jsExecutor=(JavascriptExecutor) driver;
+		
 		username = "mngr233537";
 		password= "vUvapen";
 		customerName="Barakkas";
@@ -70,7 +88,7 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	}
 
 	@Test
-	public void TC_01_handlingTextBoxTextArea() {
+	 public void TC_01_handlingTextBoxTextArea() {
 		//Step 1 : Access page
 		driver.get("http://demo.guru99.com/v4");
 		
@@ -213,13 +231,60 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	}
 
 	@Test
-	public void TC_02_() {
-		driver.get("");
+	public void TC_02_HandlinghtmlDropDownList() {
+		//Step 1 Access page
+		
+		driver.get("https://automationfc.github.io/basic-form/index.html");
+		
+		//Step 2 check dropdown list is multipled or not
+		
+		WebElement jobDropdown = driver.findElement(By.xpath("//select[@id='job1']"));
+		
+	    select = new Select(jobDropdown);
+		
+		Assert.assertFalse(select.isMultiple());
+		
+		//Step 3 select value "Automation Tester" in dropdown list by method selectByVisibleText
+		
+		select.selectByVisibleText("Automation Tester");
+		
+		//Step 4 Verify value
+		Assert.assertEquals(select.getFirstSelectedOption().getText(), "Automation Tester");
+		
+		//Step 5 select value	"Manual Tester" in dropdown list by method selectByValue
+		
+		select.selectByValue("manual");
+		
+		//Step 6 Verify value
+		
+		Assert.assertEquals(select.getFirstSelectedOption().getText(), "Manual Tester");
+		
+		//Step 7 Select value "Mobile Tester" in  dropdown list by method selectByIndex
+		
+		select.selectByIndex(4);
+		
+		//Step 8  Verify Value
+		
+		Assert.assertEquals(select.getFirstSelectedOption().getText(), "Manual Tester");
+		
+		//Step 9 Verify dropdown list have 5 values
+		
+		Assert.assertEquals(5, select.getOptions().size());
 	}
 
 	@Test
-	public void TC_03_() {
-		driver.get("");
+	public void TC_03_HandlingCustomDropDownList() throws Exception{
+		
+		//step 1 access page
+		driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
+		
+		//step 2 select final item (item 19)
+		
+		selectItemDropdown("//span[@id='number-button']","//ul[@id='number-menu']/li/div","19");
+		
+		//step 3 Verify
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(), "19");
 	}
 
 	
@@ -247,6 +312,34 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	
 	public String getAttribute(By by,String attributeName) {
 		return driver.findElement(by).getAttribute(attributeName);
+	}
+	
+	public void selectItemDropdown(String parentLocator, String allItemLocator, String expectedItem)throws InterruptedException{
+		
+		//click dropdown de hien thi cac item
+		WebElement parentDropdown= driver.findElement(By.xpath(parentLocator));
+		parentDropdown.click();
+		Thread.sleep(2000);
+	
+		
+		//cho cho cac element load thanh cong	
+		waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemLocator)));
+		
+		//define ra 1 list element de store lai cac item duoc load ra
+		List <WebElement> allItems= driver.findElements(By.xpath(allItemLocator));
+			
+		//dung vong lap de duyet qua cac item minh can
+		for (WebElement item:allItems) {
+			if(item.getText().equals(expectedItem)) {
+				jsExecutor.executeScript("arguments[0].scrollIntoView(true);", item);
+				Thread.sleep(1000); 
+				item.click();
+				break;
+			}
+		}
+		
+		
+		
 	}
 	
 	@AfterClass
