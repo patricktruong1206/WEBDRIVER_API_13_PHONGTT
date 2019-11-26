@@ -55,6 +55,14 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	
 	By submitButton= By.xpath("//input[@type='submit']");
 	
+	By angularValue= By.xpath("//div[@class='mat-select-value']//span[text()='Alaska']");
+	
+	By reactJsValue=  By.xpath("//div[@class='visible menu transition']//span[text()='Christian']");
+	
+	By vueJsValue= By.xpath("//li[contains(.,'First Option')]");
+	
+	By editableValue= By.xpath("//div[@id='default-place']/descendant::li[contains(@class,'es-visible')]");
+	
 	Select select;
 	
 	@BeforeClass
@@ -287,6 +295,65 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 		Assert.assertEquals(driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(), "19");
 	}
 
+	@Test
+	public void TC_04_HandlingAngularDropDownList() throws Exception{
+		
+		//step 1 access page
+		driver.get("https://material.angular.io/components/select/examples");
+		
+		//step 2 select final item (item 19)
+		
+		selectItemDropdown("//label/child::mat-label[text()='State']","//div[contains(@class,'mat-primary')]/mat-option","Alaska");
+		
+		//step 3 Verify
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//span[@class='ng-tns-c100-18 ng-star-inserted']")).getText(), "Alaska");
+	}
+	
+	@Test
+	public void TC_05_HandlingReactJsDropDownList() throws Exception{
+		
+		//step 1 access page
+		driver.get("https://react.semantic-ui.com/modules/dropdown/");
+		
+		//step 2 select final item (item 19)
+		
+		selectItemDropdown("//div[text()='Select Friend']","//div[@class='visible menu transition']","Christian");
+		
+		//step 3 Verify
+		
+		Assert.assertTrue(isElementDisplayed(reactJsValue));
+	}
+	
+	@Test
+	public void TC_06_HandlingVueJsDropDownList() throws Exception{
+		
+		//step 1 access page
+		driver.get("https://mikerodham.github.io/vue-dropdowns/");
+		
+		//step 2 select final item (item 19)
+		
+		selectItemDropdown("//li[@class='dropdown-toggle']","//ul[@class='dropdown-menu']","First Option");
+		
+		//step 3 Verify
+		
+		Assert.assertTrue(isElementDisplayed(vueJsValue));
+	}
+	
+	@Test
+	public void TC_07_HandlingEditableDropDownList() throws Exception{
+		
+		//step 1 access page
+		driver.get("http://indrimuska.github.io/jquery-editable-select/");
+		
+		//step 2 select final item (item 19)
+		
+		selectItemEditableDropdown("//div[@id='default-place']/input","//div[@id='default-place']/descendant::li","Fiat");
+		
+		//step 3 Verify
+		
+		Assert.assertEquals(getTextElement(editableValue), "Fiat");
+	}
 	
 	public void sendkeyElement(By by,String value)
 	{
@@ -313,12 +380,23 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	public String getAttribute(By by,String attributeName) {
 		return driver.findElement(by).getAttribute(attributeName);
 	}
-	
+	public boolean isElementDisplayed(By by){
+		if(driver.findElement(by).isDisplayed())
+		{
+			System.out.println("Element with locator["+ by +"] is displayed");
+			return true;
+		}
+		else {
+			System.out.println("Element with locator["+ by +"] is not displayed");
+			return false;
+		}
+	}
 	public void selectItemDropdown(String parentLocator, String allItemLocator, String expectedItem)throws InterruptedException{
 		
 		//click dropdown de hien thi cac item
 		WebElement parentDropdown= driver.findElement(By.xpath(parentLocator));
-		parentDropdown.click();
+		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", parentDropdown);
+		jsExecutor.executeScript("arguments[0].click();", parentDropdown);
 		Thread.sleep(2000);
 	
 		
@@ -338,7 +416,33 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 			}
 		}
 		
+	}
+	
+public void selectItemEditableDropdown(String parentLocator, String allItemLocator, String expectedItem)throws InterruptedException{
 		
+		//click dropdown de hien thi cac item
+		WebElement parentDropdown= driver.findElement(By.xpath(parentLocator));
+		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", parentDropdown);
+		jsExecutor.executeScript("arguments[0].click();", parentDropdown);
+		Thread.sleep(2000);
+		parentDropdown.sendKeys(expectedItem);
+	
+		
+		//cho cho cac element load thanh cong	
+		waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemLocator)));
+		
+		//define ra 1 list element de store lai cac item duoc load ra
+		List <WebElement> allItems= driver.findElements(By.xpath(allItemLocator));
+			
+		//dung vong lap de duyet qua cac item minh can
+		for (WebElement item:allItems) {
+			if(item.getText().equals(expectedItem)) {
+				jsExecutor.executeScript("arguments[0].scrollIntoView(true);", item);
+				Thread.sleep(1000); 
+				item.click();
+				break;
+			}
+		}
 		
 	}
 	
