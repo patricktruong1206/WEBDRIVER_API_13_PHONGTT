@@ -63,6 +63,8 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	
 	By editableValue= By.xpath("//div[@id='default-place']/descendant::li[contains(@class,'es-visible')]");
 	
+	By iframe= By.xpath("//iframe");
+	
 	Select select;
 	
 	@BeforeClass
@@ -349,6 +351,23 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 		//step 2 select final item (item 19)
 		
 		selectItemEditableDropdown("//div[@id='default-place']/input","//div[@id='default-place']/descendant::li","Fiat");
+		
+		//step 3 Verify
+		
+		Assert.assertEquals(getTextElement(editableValue), "Fiat");
+	}	
+	
+	@Test
+	public void TC_07_HandlingMultipleDropDownList() throws Exception{
+		
+		//step 1 access page
+		driver.get("http://multiple-select.wenzhixin.net.cn/examples#basic.html");
+		
+		
+		driver.switchTo().frame(driver.findElement((iframe)));
+		//step 2 select final item (item 19)
+		
+		selectItemEditableDropdown("//button[@class='ms-choice']","//div[@class='ms-drop bottom']/descendant::li","Fiat");
 		
 		//step 3 Verify
 		
