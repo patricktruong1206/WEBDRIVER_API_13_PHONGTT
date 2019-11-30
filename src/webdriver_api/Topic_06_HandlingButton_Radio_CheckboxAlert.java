@@ -38,7 +38,7 @@ public class Topic_06_HandlingButton_Radio_CheckboxAlert {
 		driver.manage().window().maximize();
 		
 	}
-/*
+
 	@Test
 	public void TC_01_Button() {
 		//Step 1: Access page 
@@ -105,7 +105,7 @@ public class Topic_06_HandlingButton_Radio_CheckboxAlert {
 			Assert.assertTrue(isElemnentSelected(radioButton));
 		}	
 	}
-	*/
+	
 	@Test
 	public void TC_04_AcceptAlert() {
 		//Step 1  Access page  https://automationfc.github.io/basic-form/index.html
