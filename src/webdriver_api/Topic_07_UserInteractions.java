@@ -41,7 +41,7 @@ public class Topic_07_UserInteractions {
 		driver.manage().window().maximize();
 		
 	}
-/*
+
 	@Test
 	public void TC_01_moveMouseToElement() {
 		//Step 1 Access page http://www.myntra.com/
@@ -142,7 +142,7 @@ public class Topic_07_UserInteractions {
 		//Step 3 Verify message: You did great!
 		Assert.assertEquals(targetCircle.getText(),"You did great!");
 	} 
-	*/
+	
 	@Test
 	public void TC_07_dragAndDropHTML5() throws InterruptedException, IOException{
 		//Step 1 Access page http://the-internet.herokuapp.com/drag_and_drop
