@@ -20,6 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Topic_05_Textbox_Textarea_Dropdownlist {
 	WebDriver driver;
+	WebElement element;
 	WebDriverWait waitExplicit;
 	JavascriptExecutor jsExecutor;	
 	Actions action;
@@ -254,12 +255,12 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 		
 		Assert.assertFalse(select.isMultiple());
 		
-		//Step 3 select value "Automation Tester" in dropdown list by method selectByVisibleText
-		
-		select.selectByVisibleText("Automation Tester");
+		//Step 3 select value "Mobile Tesintg" in dropdown list by method selectByVisibleText
+			
+		select.selectByVisibleText("Mobile Testing");
 		
 		//Step 4 Verify value
-		Assert.assertEquals(select.getFirstSelectedOption().getText(), "Automation Tester");
+		Assert.assertEquals(select.getFirstSelectedOption().getText(), "Mobile Testing");
 		
 		//Step 5 select value	"Manual Tester" in dropdown list by method selectByValue
 		
@@ -283,6 +284,65 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	}
 
 	@Test
+	public void TC_02_1_HandlinghtmlDropDownList2() throws Exception {
+		//Step 1: Access page https://demo.nopcommerce.com/
+		driver.get("https://demo.nopcommerce.com");
+		
+		//Step 2: Click register on Header
+		
+		clickElement(By.xpath("//a[text()='Register']"));
+		
+		//Step 3: Input data to form
+		
+		clickElement(By.xpath("//input[@value='M']"));
+	
+		sendkeyElement(By.xpath("//input[@id='FirstName']"),"Patrick");
+		
+		sendkeyElement(By.xpath("//input[@id='LastName']"),"Ace");
+	
+		
+			//Select value in dropdown Date of Birth:  
+				//Day =1  check that dropdown have 32 items
+		List<WebElement> dateList= driver.findElements(By.xpath("//select[@name='DateOfBirthDay']//option"));
+		
+		Assert.assertEquals(dateList.size(), 32);
+		
+		selectItemDropdown("//select[@name='DateOfBirthDay']","//select[@name='DateOfBirthDay']//option","1");
+				//Month = May check that dropdown have 13 items
+		List<WebElement> monthList= driver.findElements(By.xpath("//select[@name='DateOfBirthMonth']//option"));
+		
+		Assert.assertEquals(monthList.size(), 13);
+		
+		selectItemDropdown("//select[@name='DateOfBirthMonth']","//select[@name='DateOfBirthMonth']//option","May");
+				//Year=1980 check that dropdown have 112 items
+		List<WebElement> yearList= driver.findElements(By.xpath("//select[@name='DateOfBirthYear']//option"));
+		
+		Assert.assertEquals(yearList.size(), 112);
+		
+		selectItemDropdown("//select[@name='DateOfBirthYear']","//select[@name='DateOfBirthYear']//option","1980");
+		
+		
+		sendkeyElement(By.xpath("//input[@id='Email']"),email);
+		
+		sendkeyElement(By.xpath("//input[@id='Company']"),"Officience");
+		
+		sendkeyElement(By.xpath("//input[@id='Password']"),"admin@123");
+		
+		sendkeyElement(By.xpath("//input[@id='ConfirmPassword']"),"admin@123");
+		
+
+		
+		//Step 4 :  Click on Register button
+		
+		clickElement(By.xpath("//input[@id='register-button']"));
+		
+		//Step 5: Verify that navigated after register succeed
+		
+		Assert.assertTrue(isElementDisplayed(By.xpath("//div[text()='Your registration completed']")));
+	}
+	
+	
+	@Test
 	public void TC_03_HandlingCustomDropDownList() throws Exception{
 		
 		//step 1 access page
@@ -305,13 +365,32 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 		
 		//step 2 select final item (item 19)
 		
-		selectItemDropdown("//label/child::mat-label[text()='State']","//div[contains(@class,'mat-primary')]/mat-option","Alaska");
+		selectItemDropdownCustom("//label/child::mat-label[text()='State']","//div[contains(@class,'mat-primary')]/mat-option","Alaska");
 		
 		//step 3 Verify
 		
 		Assert.assertEquals(driver.findElement(By.xpath("//span[@class='ng-tns-c100-18 ng-star-inserted']")).getText(), "Alaska");
 	}
-	
+
+	@Test
+	public void TC_04_1_HandlingAngularDropDownList2() throws InterruptedException{
+		
+		//step 1 access page
+		driver.get("https://ej2.syncfusion.com/angular/demos/?_ga=2.262049992.437420821.1575083417-524628264.1575083417#/material/drop-down-list/data-binding");
+		
+		//step 2 select final item (item 19)
+		
+		selectItemDropdown("//ejs-dropdownlist[@id='games']","//ul[@id='games_options']//li","Football");
+		Thread.sleep(2000);
+		
+		//step 3 Verify
+		String expectedValue = getTextByJS("#games_hidden > option");
+		System.out.print("expected value: " +expectedValue);
+		Assert.assertEquals(expectedValue, "Football");
+
+	}
+		
+
 	@Test
 	public void TC_05_HandlingReactJsDropDownList() throws Exception{
 		
@@ -358,21 +437,7 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	}	
 	
 	@Test
-	public void TC_07_HandlingMultipleDropDownList() throws Exception{
-		
-		//step 1 access page
-		driver.get("http://multiple-select.wenzhixin.net.cn/examples#basic.html");
-		
-		
-		driver.switchTo().frame(driver.findElement((iframe)));
-		//step 2 select final item (item 19)
-		
-		selectItemEditableDropdown("//button[@class='ms-choice']","//div[@class='ms-drop bottom']/descendant::li","Fiat");
-		
-		//step 3 Verify
-		
-		Assert.assertEquals(getTextElement(editableValue), "Fiat");
-	}
+	
 	
 	public void sendkeyElement(By by,String value)
 	{
@@ -392,7 +457,7 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 	
 	public int randomNumber() {
 		Random rand= new Random();
-		int n =rand.nextInt(50);
+		int n =rand.nextInt(1000);
 		return n;
 	}
 	
@@ -410,14 +475,13 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 			return false;
 		}
 	}
-	public void selectItemDropdown(String parentLocator, String allItemLocator, String expectedItem)throws InterruptedException{
+	public void selectItemDropdown(String parentLocator, String allItemLocator, String expectedItem) throws InterruptedException{
 		
 		//click dropdown de hien thi cac item
 		WebElement parentDropdown= driver.findElement(By.xpath(parentLocator));
 		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", parentDropdown);
-		jsExecutor.executeScript("arguments[0].click();", parentDropdown);
-		Thread.sleep(2000);
-	
+		parentDropdown.click();
+		//driver.findElement(By.xpath(parentLocator)).click();
 		
 		//cho cho cac element load thanh cong	
 		waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemLocator)));
@@ -437,7 +501,33 @@ public class Topic_05_Textbox_Textarea_Dropdownlist {
 		
 	}
 	
-public void selectItemEditableDropdown(String parentLocator, String allItemLocator, String expectedItem)throws InterruptedException{
+public void selectItemDropdownCustom(String parentLocator, String allItemLocator, String expectedItem) throws InterruptedException{
+		
+		//click dropdown de hien thi cac item
+		WebElement parentDropdown= driver.findElement(By.xpath(parentLocator));
+		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", parentDropdown);
+		jsExecutor.executeScript("arguments[0].click();", parentDropdown);
+		//driver.findElement(By.xpath(parentLocator)).click();
+		
+		//cho cho cac element load thanh cong	
+		waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemLocator)));
+		
+		//define ra 1 list element de store lai cac item duoc load ra
+		List <WebElement> allItems= driver.findElements(By.xpath(allItemLocator));
+			
+		//dung vong lap de duyet qua cac item minh can
+		for (WebElement item:allItems) {
+			if(item.getText().equals(expectedItem)) {
+				jsExecutor.executeScript("arguments[0].scrollIntoView(true);", item);
+				Thread.sleep(1000); 
+				item.click();
+				break;
+			}
+		}
+		
+	}
+	
+	public void selectItemEditableDropdown(String parentLocator, String allItemLocator, String expectedItem)throws InterruptedException{
 		
 		//click dropdown de hien thi cac item
 		WebElement parentDropdown= driver.findElement(By.xpath(parentLocator));
@@ -456,13 +546,23 @@ public void selectItemEditableDropdown(String parentLocator, String allItemLocat
 		//dung vong lap de duyet qua cac item minh can
 		for (WebElement item:allItems) {
 			if(item.getText().equals(expectedItem)) {
-				jsExecutor.executeScript("arguments[0].scrollIntoView(true);", item);
-				Thread.sleep(1000); 
+				jsExecutor.executeScript("arguments[0].scrollIntoView(true);", item);	
 				item.click();
 				break;
 			}
 		}
 		
+	}
+	
+
+	
+	public String getTextElement(String locator) {
+		WebElement element = driver.findElement(By.xpath(locator));
+		return element.getText();
+	}
+	
+	public String getTextByJS(String locator) {
+	return (String)	jsExecutor.executeScript("return document.querySelector('"+ locator +"').text");
 	}
 	
 	@AfterClass
