@@ -1,10 +1,8 @@
 package webdriver_api;
 
-import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +31,7 @@ public class Topic_09_JavascriptExecutor {
 	
 	By genderFemaleRadioButton= By.xpath("//input[@name='rad1' and @value= 'f']");
 	
-	By dobTextBox= By.xpath("//input[@id='dob']");
+	By dobTextBox= By.xpath("//input[@id='dob']");	
 	
 	By addressTextBox= By.xpath("//textarea[@name='addr']");
 	

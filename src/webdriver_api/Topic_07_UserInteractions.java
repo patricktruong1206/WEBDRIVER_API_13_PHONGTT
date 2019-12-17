@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +36,7 @@ public class Topic_07_UserInteractions {
 	public void beforeClass() {
 		FirefoxProfile profile= new FirefoxProfile();
 		profile.setPreference("dom.notifications.enabled", false);
-		driver = new FirefoxDriver(profile);
+		driver = new FirefoxDriver((Capabilities) profile);
 		action= new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();

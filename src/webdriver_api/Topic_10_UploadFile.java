@@ -94,7 +94,7 @@ public class Topic_10_UploadFile {
 	
 		
 	}
-*/
+
 	@Test
 	public void TC_03_UploadFileByRobotClass() throws Exception{
 		driver.get("http://blueimp.github.com/jQuery-File-Upload/");

@@ -1,6 +1,6 @@
 package webdriver_api;
 
-import static org.junit.Assert.assertEquals;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,11 +29,11 @@ public class Topic_04_Selenium_API_Commands {
 		
 		driver.findElement(By.xpath("//div[@class='footer-container']//a[@title='My Account']")).click();
 		
-		assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/login/");
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/login/");
 		
 		driver.findElement(By.xpath("//a[@class='button' and @title='Create an Account']")).click();
 		
-		assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/create/");
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/create/");
 		
 	}
 
@@ -43,11 +43,11 @@ public class Topic_04_Selenium_API_Commands {
 		
 		driver.findElement(By.xpath("//div[@class='footer-container']//a[@title='My Account']")).click();
 		
-		assertEquals(driver.getTitle(), "Customer Login");
+		Assert.assertEquals(driver.getTitle(), "Customer Login");
 		
 		driver.findElement(By.xpath("//a[@class='button' and @title='Create an Account']")).click();
 		
-		assertEquals(driver.getTitle(), "Create New Customer Account");
+		Assert.assertEquals(driver.getTitle(), "Create New Customer Account");
 		
 	}
 
@@ -59,15 +59,15 @@ public class Topic_04_Selenium_API_Commands {
 		
 		driver.findElement(By.xpath("//a[@class='button' and @title='Create an Account']")).click();
 		
-		assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/create/");
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/create/");
 		
 		driver.navigate().back();
 		
-		assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/login/");
+		Assert.assertEquals(driver.getCurrentUrl(), "http://live.demoguru99.com/index.php/customer/account/login/");
 		
 		driver.navigate().forward();
 		
-		assertEquals(driver.getTitle(), "Create New Customer Account");
+		Assert.assertEquals(driver.getTitle(), "Create New Customer Account");
 		
 	}
 
@@ -89,5 +89,5 @@ public class Topic_04_Selenium_API_Commands {
 	public void afterClass() {
 		driver.quit();
 	}
-
 }
+
