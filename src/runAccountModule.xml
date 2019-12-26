@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="ACCOUNT" parallel="false">
+  <test name="Run on FIREFOX">
+  <parameter name="browser" value="firefox" />
+ <classes>
+ <class name="testng.Topic_06_Parameter"/>
+ </classes>
+  </test> 
+  
+
+</suite> 

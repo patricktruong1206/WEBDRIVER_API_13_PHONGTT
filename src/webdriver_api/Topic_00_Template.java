@@ -23,9 +23,12 @@ public class Topic_00_Template {
 
 	@Test
 	public void TC_01_() {
-		driver.get("");
+		driver.get("https://kyna.vn/");
+		
+		driver.findElement(By.xpath("//img[@alt='facebook']")).click();
+		
 	}
-
+/*
 	@Test
 	public void TC_02_() {
 		driver.get("");
@@ -40,5 +43,5 @@ public class Topic_00_Template {
 	public void afterClass() {
 		driver.quit();
 	}
-
+*/
 }

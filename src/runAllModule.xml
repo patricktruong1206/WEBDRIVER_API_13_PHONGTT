@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="RUN ALL" parallel="tests" thread-count="3">
+<suite-files>
+<suite-file path="runAccountModule.xml"/>
+<suite-file path="runPaymentModule.xml"/>
+</suite-files>
+</suite> 
